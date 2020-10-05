@@ -12,50 +12,49 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView(
-        children: transactions
-            .map((t) => Card(
-                  child: Row(
+      child: ListView.builder(
+          itemCount: transactions.length,
+          itemBuilder: (ctx, index) {
+            return Card(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.deepPurple, width: 2)),
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "\$ ${transactions[index].amount.toStringAsFixed(2)}", // \$ is to show the dollar sign and ${t.amount} is same as t.amount.toString()
+                      // toStringAsFixed is to always show 2 digit behind . (1.00)
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.deepPurple),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.deepPurple, width: 2)),
-                        padding: EdgeInsets.all(10),
                         child: Text(
-                          "\$ ${t.amount}", // \$ is to show the dollar sign and ${t.amount} is same as t.amount.toString()
+                          transactions[index].title,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.deepPurple),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            child: Text(
-                              t.title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              DateFormat.yMMMMd().format(t.date),
-                              style: TextStyle(color: Colors.grey[600]),
-                            ),
-                          ),
-                        ],
-                      )
+                      Container(
+                        child: Text(
+                          DateFormat.yMMMMd().format(transactions[index].date),
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ),
                     ],
-                  ),
-                  elevation: 5,
-                ))
-            .toList(),
-      ),
+                  )
+                ],
+              ),
+              elevation: 5,
+            );
+          }),
     );
   }
 }

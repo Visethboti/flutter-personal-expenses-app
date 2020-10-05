@@ -7,29 +7,41 @@ class NewTransaction extends StatelessWidget {
 
   NewTransaction(this.addNewTx);
 
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.length < 1 || enteredAmount <= 0) {
+      return;
+    }
+
+    addNewTx(enteredTitle, enteredAmount);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: "Title"),
-              //onChanged: (value) => titleInput = value,
               controller: titleController,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
-              //onChanged: (value) => amountInput = value,
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
             ),
             FlatButton(
               child: Text("Add Transaction"),
               textColor: Colors.purple,
               onPressed: () {
-                addNewTx(titleController.text, double.parse(amountController.text));
+                submitData();
               },
             ),
           ],
