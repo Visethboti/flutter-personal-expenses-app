@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 
+import './widgets/user_transaction.dart';
+
 void main() => runApp(MyHomePage());
 
-class MyHomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _MyHomePageState();
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,8 +12,20 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text("Personal Expenses App"),
         ),
-        body: Center(
-          child: Text("here we are"),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                child: Card(
+                  margin: EdgeInsets.all(10),
+                  child: Text("Chart here!"),
+                  elevation: 5, // elevation is shadow
+                ),
+              ),
+              UserTransaction(),
+            ],
+          ),
         ),
       ),
     );
