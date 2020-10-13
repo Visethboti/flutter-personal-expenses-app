@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.orange,
         primarySwatch: Colors.deepOrange,
         accentColor: Colors.amber[500],
+        errorColor: Colors.red,
         fontFamily:
             'Quicksand', // font need to close the app and restart to work
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -95,6 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _removeTransaction(String txId) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == txId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: double.infinity,
               child: Chart(_recentTransactions),
             ),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
