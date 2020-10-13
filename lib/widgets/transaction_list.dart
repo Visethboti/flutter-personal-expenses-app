@@ -12,7 +12,8 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: transactions.isEmpty
+      child: transactions
+              .isEmpty // if transactions is empty child is this else child is the ListView.builder
           ? Column(
               children: [
                 Text(
@@ -23,11 +24,35 @@ class TransactionList extends StatelessWidget {
                 Flexible(child: Image.asset('assets/images/waiting.png'))
               ],
             )
-            // this ListView builder is to render only transactiosn cards that are invisble and not render all at onces
+          // this ListView builder is to render only transactiosn cards that are invisble and not render all at onces
           : ListView.builder(
               itemCount: transactions.length,
               itemBuilder: (ctx, index) {
                 return Card(
+                  elevation: 8,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      radius: 30,
+                      child: FittedBox(
+                        // FittedBox is to make large item inside, fitted into the widget and not expsand outside
+                        child: Text(
+                          "\$${transactions[index].amount.toStringAsFixed(2)}",
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMMd().format(transactions[index].date),
+                    ),
+                  ),
+                );
+                // Alternative way of create a widget for each of the transaction
+                /*Card(
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -68,7 +93,7 @@ class TransactionList extends StatelessWidget {
                     ],
                   ),
                   elevation: 5,
-                );
+                );*/
               }),
     );
   }
